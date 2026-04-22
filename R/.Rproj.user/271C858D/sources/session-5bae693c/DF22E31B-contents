@@ -1,0 +1,1416 @@
+
+# INTRODUCTION ------------------------------------------------------------
+
+
+# . -----------------------------------------------------------------------
+# . PRESENTATION . #
+# . -----------------------------------------------------------------------
+
+
+# INSTALL PACKAGES --------------------------------------------------------
+
+## Install and load the tidyverse package
+
+# Install package via command line
+install.packages("tidyverse") # only install a package ONCE
+
+# Install package via interface
+# Package -> Install -> Type name of package(s) -> Install 
+
+
+# CREATE A PROJECT --------------------------------------------------------
+
+## Under File tab -> click on New Project -> 
+## New Directory -> New Project ->
+## Type "my_project" as directory name -> Create Project
+
+## Under Files tab -> click on New Folder -> create new folder called "data"
+# Alternatively, you can type dir.create("data")
+# Use this folder to store raw data
+# Always keep your raw data raw!
+# Separate processed data from raw data
+# Create another directory for data_output, fig_output and scripts
+
+## Create new R script in your working directory -> click on symbol -> R Script -> my_script.R
+# Move the script to the scripts directory
+
+## Your working directory should look like:
+
+# . -----------------------------------------------------------------------
+# . PRESENTATION . #
+# . -----------------------------------------------------------------------
+
+# CREATING OBJECTS --------------------------------------------------------
+
+# Type the following in the CONSOLE:
+
+## Get output from R by typing math in console
+3 + 5
+12 / 7
+
+## Assign names to objects
+# Assignment operator <- (Alt + "-")
+# Value
+area_hectares <- 1.0
+# assigns object on right to name on left, i.e. 1.0 goes into area_hectares
+# area_hectares can be referred to as a variable
+# no output is printed in console -> variable is stored in memory (Environment)
+
+# To print the value, type the name of the object:
+# Either put parenthesis around the call
+(area_hectares <- 1.0)
+
+# Or simply type the name of the object
+area_hectares
+
+# R is case-sensitive, i.e. x is different from X
+# don't use names of functions, such as c, mean, etc.
+# avoid dots -> many functions in R with dots in their names (special meaning)
+# names can't start with numbers
+# use a consistent style
+
+# Convert area from hectares to acres
+2.47 * area_hectares
+
+# Change a variable's value
+area_hectares <- 2.5
+2.47 * area_hectares
+
+# Assigning a value to one variable does not change values of other variables
+# Let's store the area in acres in a new variable
+area_acres <- 2.47 * area_hectares
+2.47 * area_hectares -> area_acres # alternative
+
+# Now change area_hectares to 50
+area_hectares <- 50
+
+# What will the value of area_acres be? 6.175 or 123.5?
+area_acres
+
+## Saving your code
+# Up to now, your code has been in the console
+# Not useful for reproducibility
+# Save the script as my_script.R
+
+## Comments (Ctrl + Shift + c)
+# Anything to the right of # symbol will be ignored by R
+# Useful to make notes/explanations in your scripts
+
+# CHALLENGE 1 -------------------------------------------------------------
+
+# 1.1. Run the following code and indicate what the values 
+# are after each statement:
+
+r_length <- 2.5            
+# r_length = 2.5
+
+r_width <- 3.2
+# r_width = 3.2
+
+r_area <- r_length * r_width
+# r_area = 8
+
+r_length <- r_length * 2.0
+# r_length = 5
+
+r_area
+# r_area = 8 #it didn't change - need to rerun line 96
+
+# . -----------------------------------------------------------------------
+
+# . -----------------------------------------------------------------------
+# . PRESENTATION
+# . -----------------------------------------------------------------------
+
+# FUNCTIONS AND THEIR ARGUMENTS -------------------------------------------
+
+a <- 9 # assign value of 9 to the object a
+b <- sqrt(a) 
+
+# value of a is given to sqrt() function
+# function calculates square root and returns the value
+# which is then assigned to the variable b
+
+b
+
+# return value doesn't need to be numerical or a single item
+# it can be a set of things, or even a dataset
+
+# Each function's arguments are different
+# If arguments are left out, default values are used, called "options"
+# Options alter the way a function operates, e.g. ignore "bad values"
+
+
+# Let's try a function that can take multiple arguments
+round(3.14159)
+
+# we called the round function with only one argument and it returned the value 3
+# it was rounded to the nearest whole number
+# if you want a different number of digits, look at the arguments or look at the help
+args(round)
+?round
+# specify the number of digits you want
+round(3.14159, digits = 2)
+# if you provide arguments in the exact same order as they are defined, you don't have
+# to name them
+round(3.14159, 2)
+# if you provide arguments in a different order than they are defined, you have to name them
+round(digits = 2, x = 3.14159)
+
+
+# VECTORS AND DATA TYPES --------------------------------------------------
+
+# Vector = most common and basic data type in R
+# Contains series of values (numbers or characters)
+# Use the concatenate function to assign series of values
+hh_members <- c(3, 7, 10, 6)  # create a vector of number of households
+hh_members
+
+# A vector can also contain characters
+respondent_wall_type <- c("muddaub", "burntbricks", "sunbricks") # quotes are essential
+respondent_wall_type
+
+# Inspect the content of a vector
+length(hh_members) # tells you how many elements are in a particular vector
+length(respondent_wall_type)
+
+# Inspect the type of an object
+typeof(hh_members)
+typeof(respondent_wall_type)
+
+# All the elements are the same type of data
+class(hh_members)
+class(respondent_wall_type)
+
+# To get an overview of the structure of an object and its elements
+str(hh_members)
+str(respondent_wall_type)
+
+# Use the c() function to add elements to a vector
+hh_members
+hh_members <- c(hh_members, 9) # add to the end of the vector
+hh_members <- c(2, hh_members) # add to the beginning of the vector
+hh_members <- c(hh_members[1:3], 5, hh_members[4:6]) # add to the middle of the vector
+hh_members <- append(hh_members, 8, after = 5) # add after a specific element
+
+
+# CHALLENGE 2 -------------------------------------------------------------
+
+# 2.1. What will happen in each of the following examples
+# (hint: use class() to check data type or look at the environment)
+
+num_char <- c(1, 2, 3, "a")
+# class(num_char) # character
+
+num_logical <- c(1, 2, 3, TRUE)
+# class(num_logical) # numeric
+
+char_logical <- c("a", "b", "c", TRUE)
+# class(char_logical) # character
+
+tricky <- c(1, 2, 3, "4")
+# class(tricky) # character
+
+# Answer: R converted the content of the vector to find a common denominator
+# Converting objects from one class into another = coercion
+# Conversions happen according to a hierarchy
+# e.g. logical -> numeric -> character <- logical
+
+# . -----------------------------------------------------------------------
+
+# SUBSETTING VECTORS ------------------------------------------------------
+
+# Extract one or several values
+respondent_wall_type <- c("muddaub", "burntbricks", "sunbricks")
+respondent_wall_type[2]
+respondent_wall_type[c(3, 2)]
+# R indices start at 1
+# Other languages count from 0
+
+# Repeat indices to create an object with more elements
+more_respondent_wall_type <- respondent_wall_type[c(1, 2, 3, 2, 1, 3)]
+more_respondent_wall_type
+
+## Conditional subsetting
+# Use a logical vector to select the element with the same index
+hh_members <- c(3, 7, 10, 6)
+hh_members[c(TRUE, FALSE, TRUE, TRUE)]
+# Get logicals with TRUE for indices that meet a specific condition
+hh_members > 5 
+# So we can use this to select values above 5:
+hh_members[hh_members > 5]
+# Can combine multiple tests using & (both conditions true)
+hh_members[hh_members >= 4 & hh_members <= 7]
+# or | (at least one condition is true)
+hh_members[hh_members < 4 | hh_members > 7]
+
+# Search for the vector in certain strings:
+possessions <- c("car", "bicycle", "radio", "television", "mobile_phone")
+possessions[possessions == "car" | possessions == "bicycle"] # returns both car and bicycle
+possessions %in% c("car", "bicycle", "motorcycle", "truck", "boat", "bus")
+possessions[possessions %in% c("car", "bicycle", "motorcycle", "truck", "boat", "bus")]
+
+
+# CHALLENGE 3 -------------------------------------------------------------
+
+# 3.1. Can you figure out why "four" > "five" returns TRUE
+# when you run the following code?
+
+"four" > "five"
+
+# When using ">" or "<" on strings, R compares their alphabetical order
+# Here "four" comes after "five", and therefore the above statement returns "TRUE"
+
+# . -----------------------------------------------------------------------
+
+
+# Other types of vectors:
+# logical = TRUE or FALSE
+# integer = 2L
+# complex = 1 + 4i (real and imaginary parts)
+# raw = bitstreams
+
+# Vectors are one of many data structures in R
+# Other data structures:
+# lists
+# matrices
+# data frames
+# factors
+# arrays
+
+# . -----------------------------------------------------------------------
+# . PRESENTATION
+# . -----------------------------------------------------------------------
+
+# MISSING DATA ------------------------------------------------------------
+
+# Missing data are represented in vectors as NA
+# Most functions will return NA if your data contains missing values
+
+# To ignore missing values when doing calculations, use na.rm = TRUE
+rooms <- c(2, 1, 1, NA, 7)
+mean(rooms)
+max(rooms)
+mean(rooms, na.rm = TRUE)
+max(rooms, na.rm = TRUE)
+
+# Extract those elements which are NOT missing values
+# The ! character is also called the NOT operator
+rooms[!is.na(rooms)]
+
+# Remove incomplete cases
+na.omit(rooms)
+# First line of output = all cases that are not NA
+# Second line of output = positions of deleted values
+# Third line of output = class of deleted values
+
+# Extract those elements which are complete cases
+rooms[complete.cases(rooms)]
+
+
+
+# CHALLENGE 4 -------------------------------------------------------------
+
+# 4.1. Use the following vector (number of rooms) and create a new vector
+# (called "rooms_no_na") with NAs removed.
+
+rooms <- c(1, 2, 1, 1, NA, 3, 1, 3, 2, 1, 1, 8, 3, 1, NA, 1)
+
+rooms_no_na <- rooms[!is.na(rooms)] 
+# or
+rooms_no_na <- na.omit(rooms)
+# or
+rooms_no_na <- rooms[complete.cases(rooms)]
+
+
+# 4.2. Calculate the median (using the median() function) of the new rooms_no_na vector.
+
+median(rooms_no_na)
+
+
+# 4.3. How many households in the set use more than 2 rooms for sleeping?
+# Hint: Use conditional subsetting and the length() function
+
+# Solution 1
+rooms_above_2 <- rooms_no_na[rooms_no_na > 2]
+length(rooms_above_2)
+
+# Solution 2
+rooms_aboves_2 <- sum(rooms_no_na > 2)
+
+# . -----------------------------------------------------------------------
+
+
+# LOADING AND INSPECTING DATA ---------------------------------------------
+
+## Download the survey data to the data sub-directory
+download.file(
+  "https://raw.githubusercontent.com/datacarpentry/r-socialsci/main/episodes/data/SAFI_clean.csv",
+  "data/SAFI_clean.csv", 
+  mode = "wb"
+)
+
+# Load the tidyverse package
+library(tidyverse) 
+
+# (1) Load the data via command line
+## Convert "NULL" to NA using the "na" argument
+interviews <- read_csv("data/SAFI_clean.csv", na = "NULL") # OR
+# If you get an error: could not find function "read_csv",
+# load the tidyverse package again.
+
+# To avoid errors with relative paths, use the here() function
+library(here)
+interviews <- read_csv(here("data/SAFI_clean.csv"), na = "NULL")
+# The here() function takes folder and file names as input
+
+# (2) Load the data via command line
+interviews <- read_csv(file.choose()) #OR
+
+# (3) Load the data using the interface
+# In Environment window -> Import Dataset -> Browse for the file -> 
+# Change the name to `interviews` and select Yes for headers before importing #OR
+
+# (4) Load the data using the interface
+# In Files window -> browse for file -> click on file ->
+# Import Dataset -> same options as (3)
+
+# No output, because assignments don't display anything
+
+# . -----------------------------------------------------------------------
+# . PRESENTATION
+# . -----------------------------------------------------------------------
+
+# Let's check that our data has been loaded
+interviews
+
+# Let's check the top 6 lines of this data frame
+head(interviews)
+head(interviews, n = 10)
+View(interviews) # uppercase V
+
+## We are studying farming and irrigation methods in Tanzania and Mozambique.
+## The survey data was collected through interviews conducted between November 2016 and June 2017.
+## Dataset is stored as a comma separated value (CSV) file.
+## Each row = information for a single interview respondent; each column = variable
+## NB! Use the read_csv2 function if you are using different field separators
+## Use the read_tsv() function for tab separated data files and
+## read_delim() for less common formats.
+
+### WHAT ARE DATA FRAMES? ###
+## It's a data structure for most tabular data
+## We use it for statistics and plotting
+## It can be created by hand using functions or imported with read_csv() or read_table()
+## Data is represented in the format of a table where columns = vectors 
+## (all have the same length and each vector contains the same type of data)
+
+## Look at the size of the data
+dim(interviews) 
+# dimensions: no. of rows; no. of columns
+
+nrow(interviews) 
+# no. of rows
+
+ncol(interviews) 
+# no. of columns
+
+## Look at the content
+head(interviews)
+# first 6 rows
+
+tail(interviews)
+# last 6 rows
+
+## Look at the names
+names(interviews)
+# column names
+
+rownames(interviews)
+# row names
+
+## Look at summary of data
+str(interviews) 
+# structure of the object and information about the class, length and content of each column
+
+summary(interviews)
+# summary statistics for each column
+
+glimpse(interviews)
+# returns the number of columns and rows of the tibble, 
+# the names and class of each column, and 
+# previews as many values will fit on the screen
+
+# CHALLENGE 5 -------------------------------------------------------------
+
+
+# Based on output of str(interviews), answer the following:
+str(interviews)
+
+# 5.1. What is the data structure of the object surveys?  
+# dataframe
+
+# 5.2. How many rows and columns are in this object?  
+# 131 rows, 14 columns
+
+# . -----------------------------------------------------------------------
+
+
+# INDEXING AND SUBSETTING DATA FRAMES -------------------------------------
+
+interviews[1, 1]  # 1st element in 1st column
+interviews[1, 6]  # 1st element in 6th column
+interviews[, 1]  # 1st column
+interviews[1]  # 1st column
+interviews[[1]] # 1st column of the tibble (as a vector)
+interviews[1:3, 7]  # 1st 3 elements in 7th column
+interviews[3, ]  # 3rd element for all columns
+head_interviews <- interviews[1:6, ]  # same as head(interviews)
+head_interviews
+
+
+# Exclude certain parts of a tibble
+interviews[, -1]  # the whole tibble except 1st column
+interviews[-(7:131), ]  # same as head(interviews)
+
+# Subset columns by names
+interviews["village"]  # tibble
+interviews[, "village"]   # tibble 
+interviews[["village"]]   # vector  
+interviews$village    # vector
+
+
+# CHALLENGE 6 -------------------------------------------------------------
+
+# 6.1. Create a tibble (`interviews_100`) containing only 
+#    row 100 of the `interviews` dataset.
+interviews_100 <- interviews[100, ]  # extract observations from row 100
+
+# 6.2. Notice how `nrow(surveys)` gave you the number of rows in the tibble?
+#    6.2.1. Use that number to pull out just that last row in the tibble.
+n_rows <- nrow(interviews)  # get the number of rows in surveys dataset: 131
+interviews_last <- interviews[n_rows, ]  # get the last row by using previous answer
+
+#    6.2.2. Compare that with what you see as the last row using `tail()` 
+#         to make sure it's meeting expectations.
+tail(interviews, n = 1)  # compare this with previous result
+
+# 6.3. Use `nrow()` to extract the row that is in the middle of the tibble.
+#    Store the content of this row in an object named `interviews_middle`.
+interviews_middle <- interviews[n_rows/2, ]
+
+# 6.4. Combine `nrow()` with the `-` notation above to reproduce the behavior of
+#   `head(interviews)` keeping just the first through 6th rows of the interviews dataset.
+interviews[-(7:n_rows),]
+
+# . -----------------------------------------------------------------------
+
+# FACTORS -----------------------------------------------------------------
+
+## When we did str(interviews), we saw several columns consisting of numeric data (col_double)
+## Several columns contained character data (col_character) which should be categorical
+## R has a special class for working with categorical data, called factor
+## Factors can only contain a pre-defined set of values, known as levels (by default sorted alphabetically)
+## Factors are stored as integers and have labels (text) associated with these unique integers
+## Factors can be ordered or unordered
+## While factors look like character vectors, they are actually treated as integers
+
+# . -----------------------------------------------------------------------
+# . PRESENTATION . #
+# . -----------------------------------------------------------------------
+
+# Let's create a factor with 2 levels
+respondent_floor_type <- factor(c("earth", "cement", "cement", "earth"))  # c = concatenate
+# R will assign 1 to the level 'cement', 2 to 'earth'
+
+# Check this level assignment
+levels(respondent_floor_type)  # check the levels, i.e. cement, earth
+
+# Check number of levels
+nlevels(respondent_floor_type)  # check the number of levels, i.e. 2
+respondent_floor_type  # [1] earth cement cement earth - before ordering - levels: cement earth
+
+# Sometimes the order of the factors does not matter, 
+# other times you might want to specify the order (e.g. low, medium, high)
+# Let's reorder the levels
+respondent_floor_type <- factor(respondent_floor_type, 
+                                levels = c("earth", "cement"))
+respondent_floor_type  # [1] earth cement cement earth - after ordering - levels: earth cement
+# In R's memory these factors are represented by integers (1,2)
+
+
+## Converting factors
+
+# Convert a factor to a character vector
+as.character(respondent_floor_type)  
+
+# To convert factors to numbers...
+# 1st convert factors to characters, then to numbers
+year_fct <- factor(c(1990, 1983, 1977, 1998, 1990)) 
+as.numeric(year_fct)  #wrong!!!
+as.numeric(as.character(year_fct))  #works...
+as.numeric(levels(year_fct))[year_fct]  #recommended way
+# 1. obtain all the factor levels using levels(year_fct)
+# 2. convert levels to numeric values using as.numeric(levels(year_fct))
+# 3. access numeric values using the integers of the vector year_fct
+
+## Renaming factors
+
+# When your data is stored as a factor, you can use the plot() function to get a quick glance at it.
+
+## create a vector from the data frame column "memb_assoc"
+memb_assoc <- interviews$memb_assoc
+
+## convert it into a factor
+memb_assoc <- as.factor(memb_assoc)
+
+## let's see what it looks like
+memb_assoc
+
+## bar plot of the number of interview respondents who were
+## members of irrigation association:
+plot(memb_assoc)
+
+## Let's recreate the vector from the data frame column "memb_assoc"
+memb_assoc <- interviews$memb_assoc
+
+## replace the missing data with "undetermined"
+memb_assoc[is.na(memb_assoc)] <- "undetermined"
+
+## convert it into a factor
+memb_assoc <- as.factor(memb_assoc)
+
+## let's see what it looks like
+memb_assoc
+
+## bar plot of the number of interview respondents who were
+## members of irrigation association:
+plot(memb_assoc)
+
+
+# CHALLENGE 7 -------------------------------------------------------------
+
+# 7.1. Rename the levels of the factor to have the first letter in uppercase:
+# “No”,“Undetermined”, and “Yes”.
+
+memb_assoc <- fct_recode(memb_assoc,
+                         No = "no",
+                         Undetermined = "undetermined",
+                         Yes = "yes")
+
+
+# 7.2. Check that the levels have been renamed
+levels(memb_assoc)
+
+plot(memb_assoc)
+
+# 7.3. Recreate the bar plot such that "Undetermined" is last (after "Yes")
+memb_assoc <- factor(memb_assoc, levels = c("No", "Yes", "Undetermined"))
+plot(memb_assoc)
+
+# . -----------------------------------------------------------------------
+
+# CHALLENGE 8 -------------------------------------------------------------
+
+# Instead of creating a data frame with read.csv(), you can create your own using data.frame()
+
+# 8.1. The following code has a few mistakes. Try to fix it. 
+# missing quotes in 'animals' column
+# missing entry in 'feel' column
+# missing one comma in 'weight' column
+
+# Now fix the code:
+animal_data <- data.frame(animal=c("dog", "cat", "sea cucumber", "sea urchin"),
+                          feel=c("furry", "squishy", "spiny", "smooth"),
+                          weight=c(45, 8, 1.1, 0.8))
+animal_data
+
+
+# 8.2. What would you need to change in the following code to ensure that 
+#      each column had the accurate data type?
+
+country_climate <- data.frame(country=c("Canada", "Panama", "South Africa", "Australia"),
+                              climate=c("cold", "hot", "temperate", "hot/temperate"),
+                              temperature=c(10, 30, 18, "15"),
+                              northern_hemisphere=c(TRUE, TRUE, FALSE, "FALSE"),
+                              has_kangaroo=c(FALSE, FALSE, FALSE, 1))
+
+str(country_climate)
+
+# Remove the quotes around numbers and logicals and 
+# make sure data type is the same for each vector.
+# 1. remove quotes in temperature and northern_hemisphere
+# 2. replace 1 by TRUE in has_kangaroo column
+
+# Be aware of the automatic conversion of data types!
+# The coersion rule goes logical -> numeric -> character <-logical.
+
+
+# . -----------------------------------------------------------------------
+
+# FORMATTING DATES --------------------------------------------------------
+
+# . -----------------------------------------------------------------------
+# . PRESENTATION . #
+# . -----------------------------------------------------------------------
+
+# One common issue: converting date and time information 
+# into a variable that is appropriate and usable during analyses
+
+# Store each component of your date separately, like the 'interviews' dataset
+str(interviews)
+
+# Load the tidyverse and lubridate packages
+
+# Load the package via command line
+library(tidyverse)  # load the package every time you start a new R session
+# If it gives an error that it requires another package, just install and load that specific package
+library(lubridate) # part of tidyverse package
+
+# Load the package via interface
+# Check the box next to the name of the installed package in the package manager window
+
+# Let’s extract our interview_date column and inspect the structure:
+dates <- interviews$interview_date
+str(dates)
+
+# When we imported the data in R, read_csv() recognized that this column contained date 
+# information. We can now use the day(), month() and year() functions to extract this 
+# information from the date, and create new columns in our data frame to store it:
+interviews$day <- day(dates)
+interviews$month <- month(dates)
+interviews$year <- year(dates)
+interviews
+
+# In our example above, the interview_date column was read in correctly as a Date variable 
+# but generally that is not the case. Date columns are often read in as character variables 
+# and one can use the as_date() function to convert them to the appropriate Date/POSIXctformat.
+
+# Let’s say we have a vector of dates in character format:
+char_dates <- c("7/31/2012", "8/9/2014", "4/30/2016")
+str(char_dates)
+
+# We can convert this vector to dates as :
+as_date(char_dates, format = "%m/%d/%Y")
+
+# Observe what happens when we use a lower case y instead of upper case Y for the year.
+as_date(char_dates, format = "%m/%d/%y")
+# Here, the %y part of the format stands for a two-digit year instead of a 
+# four-digit year, and this leads to parsing errors.
+
+# We can use functions ymd(), mdy() or dmy() to convert character variables to date.
+mdy(char_dates)
+
+
+# DATA MANIPULATION USING dplyr AND tidyr ---------------------------------
+
+# . -----------------------------------------------------------------------
+# . PRESENTATION . #
+# . -----------------------------------------------------------------------
+
+## Read in the original data
+interviews <- read_csv("data/SAFI_clean.csv", na = "NULL")
+interviews
+
+## Selecting columns and filtering rows
+
+# Select specific columns
+select(interviews, village, no_membrs, months_lack_food)
+interviews[c("village","no_membrs","months_lack_food")] # use subsetting
+select(interviews, village:respondent_wall_type) # select a series of columns
+
+# To select all columns EXCEPT certain ones, use "-"
+select(interviews, -village, -months_lack_food)
+
+# Choose rows based on specific criteria or conditions
+filter(interviews, village == "Chirodzo")
+
+# Filter observations with the "and" operator (comma)
+# output dataframe satisfies ALL specified conditions
+filter(interviews, village == "Chirodzo",
+       rooms > 1,
+       no_meals > 2)
+
+# Filter observations with "&" logical operator
+# output dataframe satisfies ALL specified conditions
+filter(interviews, village == "Chirodzo" &
+         rooms > 1 &
+         no_meals > 2)
+
+# Filter observations with "|" logical operator
+# output dataframe satisfies AT LEAST ONE of the specified conditions
+filter(interviews, village == "Chirodzo" | village == "Ruaca")
+
+# What if you want to select and filter at the same time?
+# 1. use intermediate steps
+interviews2 <- filter(interviews, village == "Chirodzo")
+interviews_ch <- select(interviews2, village:respondent_wall_type)
+# clutter up your workspace
+# hard to keep track of multiple steps
+
+# 2. use nested functions
+interviews_ch <- select(filter(interviews, village == "Chirodzo"),
+                        village:respondent_wall_type)
+# difficult to read
+# R evaluates the expression from the inside out (first filtering, then selecting)
+
+# 3. use pipes - recommended way!
+
+# . -----------------------------------------------------------------------
+# . PRESENTATION . #
+# . -----------------------------------------------------------------------
+
+# Pipes
+# read the pipe like the word “then”
+interviews %>% # Shortcut = Ctrl + Shift + M
+  filter(village == "Chirodzo") %>%
+  select(village:respondent_wall_type)
+
+# create a new object with the smaller version of the data
+interviews_ch <- interviews %>%
+  filter(village == "Chirodzo") %>%
+  select(village:respondent_wall_type)
+
+interviews_ch
+
+# pipes let you take output of one function and use as input for the next function
+
+# CHALLENGE 9 -------------------------------------------------------------
+
+# Using pipes, subset the interviews data to include interviews where respondents 
+# were members of an irrigation association (memb_assoc) and retain only the columns 
+# affect_conflicts, liv_count, and no_meals.
+
+interviews %>%
+  filter(memb_assoc == "yes") %>%
+  select(affect_conflicts, liv_count, no_meals)
+
+
+# . -----------------------------------------------------------------------
+
+
+## Mutate
+
+# Create new columns based on values in existing columns
+# avg number of people per room
+interviews %>%
+  mutate(people_per_room = no_membrs / rooms)
+
+# remove NAs by using filter()
+interviews %>%
+  filter(!is.na(memb_assoc)) %>%
+  mutate(people_per_room = no_membrs / rooms)
+
+
+# CHALLENGE 10 ------------------------------------------------------------
+
+# Create a new dataframe from the interviews data that meets the following criteria: 
+# * contains only the village column and a new column called total_meals 
+# * the total_meals column must contain a value that is equal to the total number of meals 
+#   served in the household per day on average (no_membrs times no_meals).
+# * Only the rows where total_meals is greater than 20 should be shown in the final dataframe.
+
+# Hint: think about how the commands should be ordered to produce this data frame!
+
+interviews_total_meals <- interviews %>%
+  mutate(total_meals = no_membrs * no_meals) %>%
+  filter(total_meals > 20) %>%
+  select(village, total_meals)
+
+interviews_total_meals
+
+# . -----------------------------------------------------------------------
+
+# . -----------------------------------------------------------------------
+# . PRESENTATION . #
+# . -----------------------------------------------------------------------
+
+# SPLIT-APPLY-COMBINE ANALYSIS --------------------------------------------
+
+# Split data into groups > apply some analysis to each group > combine results
+# Do this using the group_by() function
+# Summarise() function is often used together with group_by()
+# It collapses each group into a single-row summary of that group
+
+# Compute the average household size by village
+interviews %>%
+  group_by(village) %>%
+  summarise(mean_no_membrs = mean(no_membrs))
+
+# You can also group by multiple columns
+interviews %>%
+  group_by(village, memb_assoc) %>%
+  summarize(mean_no_membrs = mean(no_membrs))
+# Note that the output is a grouped tibble
+
+# To obtain an ungrouped tibble, use the ungroup function:
+interviews %>%
+  group_by(village, memb_assoc) %>%
+  summarize(mean_no_membrs = mean(no_membrs)) %>%
+  ungroup()
+
+# First remove missing values (NA) before calculating summary statistics
+interviews %>%
+  filter(!is.na(memb_assoc)) %>%
+  group_by(village, memb_assoc) %>%
+  summarize(mean_no_membrs = mean(no_membrs))
+
+# Once data is grouped, you can summarise multiple variables simultaneously
+surveys %>%
+  filter(!is.na(weight)) %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = mean(weight),
+            min_weight = min(weight))  
+
+## Arrange()
+# Sort data to put the group with the smallest household first
+interviews %>%
+  filter(!is.na(memb_assoc)) %>%
+  group_by(village, memb_assoc) %>%
+  summarize(mean_no_membrs = mean(no_membrs),
+            min_membrs = min(no_membrs)) %>%
+  arrange(min_membrs)
+
+# You can also sort in descending order
+interviews %>%
+  filter(!is.na(memb_assoc)) %>%
+  group_by(village, memb_assoc) %>%
+  summarize(mean_no_membrs = mean(no_membrs),
+            min_membrs = min(no_membrs)) %>%
+  arrange(desc(min_membrs))
+
+## Counting
+# Count  the number of rows of data for each village
+interviews %>%
+  count(village)
+
+# Count is shorthand for group_by and summarise
+surveys %>%
+  group_by(village) %>% 
+  summarise(total = n())
+
+# Count provides the sort argument for convenience
+interviews %>%
+  count(village, sort = TRUE)
+
+# Count a combination of variables
+interviews %>%
+  count(village, respondent_wall_type)
+
+
+# CHALLENGE 11 ------------------------------------------------------------
+
+# 11.1. How many households in the survey have an average of two meals per day?
+interviews %>%
+  count(no_meals)
+
+# 11.2. Use group_by() and summarize() to find the mean, min, and max number of 
+# household members for each village. Also add the number of observations.
+# (hint: see ?n)
+interviews %>%
+  group_by(village) %>%
+  summarize(
+    mean_no_membrs = mean(no_membrs),
+    min_no_membrs = min(no_membrs),
+    max_no_membrs = max(no_membrs),
+    n = n()
+  )
+
+# 11.3. What was the largest household interviewed in each month?
+
+library(lubridate) # load lubridate if not already loaded
+
+# If not already included, add month, year, and day columns
+interviews %>%
+  mutate(month = month(interview_date),
+         day = day(interview_date),
+         year = year(interview_date)) %>%
+  group_by(year, month) %>%
+  summarize(max_no_membrs = max(no_membrs))
+
+# . -----------------------------------------------------------------------
+
+
+# RESHAPING WITH pivot_longer AND pivot_wider ----------------------------------------
+
+# Remember the 3 rules of defining tidy data:
+# 1. Each variable has its own column
+# 2. Each observation has its own row
+# 3. Each value must have its own cell
+
+# Once we have established that key_ID and instanceID are both unique we can use 
+# either variable as an identifier corresponding to the 131 interview records.
+interviews %>% 
+  select(key_ID) %>% 
+  distinct() %>% 
+  count()
+
+interviews %>% 
+  select(instanceID) %>% 
+  distinct() %>% 
+  count()
+
+# this format is what is called a “long” data format, 
+# where each observation occupies only one row in the dataframe.
+
+# You may find that visually you may prefer the “wide” format, 
+# since you can see more of the data on the screen. 
+# However, long format is more machine readable and is 
+# closer to the formatting of databases.
+
+
+# . -----------------------------------------------------------------------
+# . PRESENTATION . #
+# . -----------------------------------------------------------------------
+
+# Let’s transform the interviews data to create new 
+# columns for each item owned by a household.
+
+# We have multiple items in a single cell, so we need to separate the values
+# of items_owned based on the presence of semi-colons (;)
+
+interviews_items_owned <- interviews %>%
+  ## separate multiple items in items_owned
+  separate_longer_delim(items_owned, delim = ";") %>%
+  replace_na(list(items_owned = "no_listed_items")) %>%
+  mutate(items_owned_logical = TRUE) %>%
+  ## Use of grouped mutate to find number of rows
+  group_by(key_ID) %>% 
+  mutate(number_items = if_else(items_owned == "no_listed_items", 0, n())) %>% 
+  ## pivot wider by items_owned
+  pivot_wider(names_from = items_owned,
+              values_from = items_owned_logical,
+              values_fill = list(items_owned_logical = FALSE))
+
+# This format allows us to do interesting things
+# Count number of respondents in each village who owned a bicycle
+interviews_items_owned %>%
+  filter(bicycle) %>%
+  group_by(village) %>%
+  count(bicycle)
+
+# Calculate the average number of items owned by respondents in each village
+interviews_items_owned %>%
+  group_by(village) %>%
+  summarize(mean_items = mean(number_items))
+
+# Let's reverse this process and get the data in a wide format again.
+# Create a summary table on interviews_items_owned using count() and summarise().
+
+interviews_long <- interviews_items_owned %>%
+  pivot_longer(cols = bicycle:car,
+               names_to = "items_owned",
+               values_to = "items_owned_logical")
+
+
+# CHALLENGE 12 ------------------------------------------------------------
+
+# 12.1. We created interviews_items_owned by reshaping the data: first longer and then wider. 
+# Make a table showing the number of respondents in each village who owned 
+# a particular item, and include all items. The difference between this format 
+# and the wide format is that you can now count all the items using the 
+# items_owned variable.
+
+interviews_long %>%
+  filter(items_owned_logical) %>% 
+  group_by(village) %>% 
+  count(items_owned)
+
+# . -----------------------------------------------------------------------
+
+
+# . -----------------------------------------------------------------------
+# . PRESENTATION . #
+# . -----------------------------------------------------------------------
+
+# EXPORTING DATA ----------------------------------------------------------
+
+# Let's clean up our data so that we can use it for plotting.
+# Some of the cells in the months_lack_food column contain multiple months,
+# which are separated by semi-colons (;).
+# Replicate the previous steps with the months_lack_food column in the interviews dataframe. 
+# Create a new dataframe with columns for each of the months filled with logical 
+# vectors (TRUE or FALSE) and a summary column called number_months_lack_food that 
+# calculates the number of months each household reported a lack of food.
+
+# Note that if the household did not lack food in the previous 12 months, 
+# the value input was “none”.
+
+## Plotting data ##
+## Start with the interviews_items_owned dataframe
+interviews_plotting <- interviews_items_owned %>%
+  ## separate multiple items in months_lack_food
+  separate_longer_delim(months_lack_food, delim = ";") %>%
+  mutate(months_lack_food_logical = TRUE,
+         number_months_lack_food = if_else(months_lack_food == "none", 0, n())) %>%
+  ## pivot wider by months_lack_food
+  pivot_wider(names_from = months_lack_food,
+              values_from = months_lack_food_logical,
+              values_fill = list(months_lack_food_logical = FALSE))
+
+## Save the interviews_plotting dataset as a CSV file in your data_output folder
+write_csv(interviews_plotting, file = "data_output/interviews_plotting.csv")
+
+
+# DATA VISUALIZATION WITH ggplot2 -----------------------------------------
+
+# . -----------------------------------------------------------------------
+# . PRESENTATION . #
+# . -----------------------------------------------------------------------
+
+## Plotting with ggplot2
+library(tidyverse)
+
+# Use the 'interviews_plotting.csv' dataset that we exported in the previous step
+# If not still in the workspace, load the data
+interviews_plotting <- read_csv("data_output/interviews_plotting.csv")
+
+# Bind the plot to a specific data frame
+interviews_plotting %>%
+  ggplot() 
+# ggplot() creates a coordinate system that you can add layers to
+# output: grey block
+# If you get an error about "invalid graphics state", run "dev.off()" in the console
+
+# Define mapping (aesthetics (aes)), by selecting variables to be plotted
+interviews_plotting %>%
+  ggplot(aes(x = no_membrs, y = number_items)) 
+# output: grey block + gridlines + axes
+
+# Add geoms_(points/lines/bars) graphical representation of data in plot
+interviews_plotting %>%
+  ggplot(aes(x = no_membrs, y = number_items)) +
+  geom_point()   # "+" must be at end of each line containing a layer
+# The + sign is used to add new layers
+# It must be placed at the end of the line containing the previous layer
+
+## Assign the plot to a variable to create a plot template
+interviews_plot <- interviews_plotting %>%
+  ggplot(aes(x = no_membrs, y = number_items)) 
+# no output - just assigned to object
+
+# Draw the plot
+interviews_plot +
+  geom_point()
+
+# This is the correct syntax for adding layers
+interviews_plot +  # "+" at the end of each line
+  geom_point()     
+
+# This will not add the new layer
+interviews_plot
++ geom_point()    # "+" on the wrong line
+
+# Scatter plots can be useful for small datasets
+# It may show patterns, i.e. x is associated with y
+# It may also display clusters, as you can see in this plot
+
+
+# BUILDING PLOTS ITERATIVELY ----------------------------------------------
+
+# Define dataset to use, lay the axes and choose a geom
+interviews_plotting %>%
+  ggplot(aes(x = no_membrs, y = number_items)) +
+  geom_point()
+
+# For large datasets, overplotting of points can be a limitation
+# Handle this by changing the transparency of the points or
+# jittering the location of the points
+
+# Add transparency to avoid overplotting
+interviews_plotting %>%
+  ggplot(aes(x = no_membrs, y = number_items)) +
+  geom_point(alpha = 0.5)
+# lower alpha = more transparency
+
+# Add jitter to data points
+interviews_plotting %>%
+  ggplot(aes(x = no_membrs, y = number_items)) +
+  geom_jitter()
+
+# Specify the amount of random motion in the jitter
+# When we don’t specify values for width and height, 
+# geom_jitter() defaults to 40% of the resolution of the data 
+# (the smallest change that can be measured).
+# Pick values between 0.1 and 0.4
+interviews_plotting %>%
+  ggplot(aes(x = no_membrs, y = number_items)) +
+  geom_jitter(alpha = 0.5,
+              width = 0.2,
+              height = 0.2)
+
+# Add color for all the points
+interviews_plotting %>%
+  ggplot(aes(x = no_membrs, y = number_items)) +
+  geom_jitter(alpha = 0.5,
+              color = "blue",
+              width = 0.2,
+              height = 0.2)
+
+# Add a color to each village in the plot differently
+interviews_plotting %>%
+  ggplot(aes(x = no_membrs, y = number_items)) +
+  geom_jitter(
+    aes(color = village),
+    alpha = 0.5,
+    width = 0.2,
+    height = 0.2
+  )
+
+# We can also specify the colors directly inside the global mapping
+interviews_plotting %>%
+  ggplot(aes(x = no_membrs, y = number_items, color = village)) +
+  geom_jitter(
+    alpha = 0.5,
+    width = 0.2,
+    height = 0.2
+  )
+
+# Global vs local mappings
+interviews_plotting %>%
+  ggplot(aes(x = no_membrs, y = number_items, color = village)) +
+  geom_point(alpha = 0.5, color = "blue") # local mapping overrides global mapping
+
+# Another way to plot data with overlapping points is to use the geom_count()
+interviews_plotting %>%
+  ggplot(aes(x = no_membrs, y = number_items, color = village)) +
+  geom_count()
+
+# CHALLENGE 13 ------------------------------------------------------------
+
+# Use what you just learned to create a scatter plot of rooms by village 
+# with the respondent_wall_type showing in different colours. 
+# Does this seem like a good way to display the relationship between these variables? 
+# What other kinds of plots might you use to show this type of data?
+
+interviews_plotting %>%
+  ggplot(aes(x = village, y = rooms)) +
+  geom_jitter(aes(color = respondent_wall_type),
+              alpha = 0.5,
+              width = 0.2,
+              height = 0.2)
+
+# This is not a great way to show this type of data because 
+# it is difficult to distinguish between villages. 
+# Rather use a boxplot to visualise the distribution of rooms for each wall type.
+# . -----------------------------------------------------------------------
+
+
+## Boxplot
+
+## Boxplot = visual shorthand for distribution of values
+
+# Visualise the distribution of rooms for each wall type:
+interviews_plotting %>%
+  ggplot(aes(x = respondent_wall_type, y = rooms)) +
+  geom_boxplot()
+
+# box stretches from the 25th percentile of the distribution to the 75th percentile
+# also known as IQR (interquartile range)
+# line in middle of boxplot = median (50th percentile) of distribution
+# distribution may be symmetric about the median, or skewed to one side
+# whiskers go to further non-outlier points
+# outliers = values > 1.5 * IQR (measured from edges of box)
+
+# Add points to the boxplot - better idea of number of measurements and
+# of their distribution
+interviews_plotting %>%
+  ggplot(aes(x = respondent_wall_type, y = rooms)) +
+  geom_boxplot(alpha = 0) +
+  geom_jitter(alpha = 0.5,
+              color = "tomato",
+              width = 0.2,
+              height = 0.2)
+# Boxplot is behind the jitter
+
+# Redraw previous graph so that boxplot is on top of jitter
+interviews_plotting %>%
+  ggplot(aes(x = respondent_wall_type, y = rooms)) +
+  geom_jitter(alpha = 0.5,
+              color = "tomato",
+              width = 0.2,
+              height = 0.2) +
+  geom_boxplot(alpha = 0)
+# Jitter is behind the boxplot
+
+
+# CHALLENGE 14 ------------------------------------------------------------
+
+# 14.1. Boxplots are useful summaries, but hide the *shape* of the distribution.
+# Replace the boxplot with a violin plot to see the shape; see geom_violin()
+interviews_plotting %>%
+  ggplot(aes(x = respondent_wall_type, y = rooms)) +
+  geom_violin(alpha = 0) +
+  geom_jitter(alpha = 0.5, color = "tomato")
+
+# 14.2. Create a boxplot for liv_count for each wall type. 
+# Overlay the boxplot layer on a jitter layer to show actual measurements.
+interviews_plotting %>%
+  ggplot(aes(x = respondent_wall_type, y = liv_count)) +
+  geom_boxplot(alpha = 0) +
+  geom_jitter(alpha = 0.5, width = 0.2, height = 0.2)
+
+# 14.3. Add colour to the data points on your boxplot according to whether 
+# the respondent is a member of an irrigation association (memb_assoc).
+
+interviews_plotting %>%
+  ggplot(aes(x = respondent_wall_type, y = liv_count)) +
+  geom_boxplot(alpha = 0) +
+  geom_jitter(aes(color = memb_assoc), alpha = 0.5, width = 0.2, height = 0.2)
+
+
+# . -----------------------------------------------------------------------
+
+
+## Barplots
+
+# Useful for visualising categorical data
+interviews_plotting %>%
+  ggplot(aes(x = respondent_wall_type)) +
+  geom_bar()
+
+# Use the fill aesthetic to colour bars
+interviews_plotting %>%
+  ggplot(aes(x = respondent_wall_type)) +
+  geom_bar(aes(fill = village))
+# Stacked bar chart
+
+# Use the position argument to put the bars side-by-side
+interviews_plotting %>%
+  ggplot(aes(x = respondent_wall_type)) +
+  geom_bar(aes(fill = village), position = "dodge")
+
+# We’re more likely to be interested in the proportion of each housing type 
+# in each village than in the actual count of number of houses of each type 
+# (because we might have sampled different numbers of households in each village). 
+# To compare proportions, we will first create a new data frame (percent_wall_type) 
+# with a new column named “percent” representing the percent of each house type in each village. 
+# We will remove houses with cement walls, as there was only one in the dataset.
+percent_wall_type <- interviews_plotting %>%
+  filter(respondent_wall_type != "cement") %>%
+  count(village, respondent_wall_type) %>%
+  group_by(village) %>%
+  mutate(percent = (n / sum(n)) * 100) %>%
+  ungroup()
+
+# Now we can use this new data frame to create our plot showing the percentage of 
+# each house type in each village.
+percent_wall_type %>%
+  ggplot(aes(x = village, y = percent, fill = respondent_wall_type)) +
+  geom_bar(stat = "identity", position = "dodge")
+
+
+# CHALLENGE 15 ------------------------------------------------------------
+
+# Create a bar plot showing the proportion of respondents in each village who 
+# are or are not part of an irrigation association (memb_assoc). Include 
+# only respondents who answered that question in the calculations and plot. 
+# Which village had the lowest proportion of respondents in an irrigation association?
+
+percent_memb_assoc <- interviews_plotting %>%
+  filter(!is.na(memb_assoc)) %>%
+  count(village, memb_assoc) %>%
+  group_by(village) %>%
+  mutate(percent = (n / sum(n)) * 100) %>%
+  ungroup()
+
+percent_memb_assoc %>%
+  ggplot(aes(x = village, y = percent, fill = memb_assoc)) +
+  geom_bar(stat = "identity", position = "dodge")
+
+# . -----------------------------------------------------------------------
+
+## Adding labels and titles
+# By default, the axes labels on a plot are determined by the name of the 
+# variable being plotted.
+# Use the labs() function to add a title and labels
+percent_wall_type %>%
+  ggplot(aes(x = village, y = percent, fill = respondent_wall_type)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Proportion of wall type by village",
+       fill = "Type of Wall in Home",
+       x = "Village",
+       y = "Percent")
+
+
+## Faceting
+# Split one plot into multiple plots based on a factor in the dataset
+
+# Make one plot for housing type proportion by village
+percent_wall_type %>%
+  ggplot(aes(x = respondent_wall_type, y = percent)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title="Proportion of wall type by village",
+       x="Wall Type",
+       y="Percent") +
+  facet_wrap(~ village)
+
+# Set the background to white and remove the grid
+percent_wall_type %>%
+  ggplot(aes(x = respondent_wall_type, y = percent)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title="Proportion of wall type by village",
+       x="Wall Type",
+       y="Percent") +
+  facet_wrap(~ village) +
+  theme_bw() +
+  theme(panel.grid = element_blank())
+
+### Export the plot
+# Export tab in the Plot pane in RStudio will save your plots at low resolution
+# Instead, use ggsave()
+my_plot <- percent_wall_type %>%
+  ggplot(aes(x = respondent_wall_type, y = percent)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title="Proportion of wall type by village",
+       x="Wall Type",
+       y="Percent") +
+  facet_wrap(~ village) +
+  theme_bw() +
+  theme(panel.grid = element_blank())
+
+ggsave("fig_output/percent_wall_type.png", my_plot, width = 15, height = 10)
+
+# Customization
+# ggplot2 cheat sheet https://www.rstudio.com/wp-content/uploads/2015/08/ggplot2-cheatsheet.pdf
+
+## ggplot2 themes
+
+# Complete list of themes is available at
+# https://ggplot2.tidyverse.org/reference/ggtheme.html
+
+# Journal themes
+# Package ggthemes allows you to choose specific journal styles
+# https://jrnold.github.io/ggthemes/reference/index.html
+
+# ggplot2 extensions website
+# https://www.ggplot2-exts.org/
+
+
+# CHALLENGE 16 ------------------------------------------------------------
+
+# Try to improve one of the plots generated in
+# this exercise or make one of your own
+
+# Some ideas:
+# Change the thickness of the lines
+# Change the name of the legend and the labels
+# Try using a different color palette (http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/)
+
+
+# . -----------------------------------------------------------------------
+
+
+# Meet 'esquisse' ---------------------------------------------------------
+
+install.packages("esquisse")
+library(esquisse)
+
+# Run the following function to open the ggplot2 builder
+esquisser()
+# Use the drag-and-drop functionality to draw any plot you like
+
+# . -----------------------------------------------------------------------
+# . PRESENTATION . #
+# . -----------------------------------------------------------------------
+
+# THE END -----------------------------------------------------------------
