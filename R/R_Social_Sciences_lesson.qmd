@@ -233,6 +233,40 @@ The data files for the lesson can be downloaded manually here: [https://github.c
 
 ![](images/Practical.PNG){fig-align="center"}
 
+## Objectives {.smaller .hcenter}
+
+::: columns
+::: {.column width="50%"}
+-   What is R and RStudio
+-   RStudio layout
+-   Creating a reproducible project
+-   [Object assignment]{.red}
+-   Functions and arguments
+-   Vectors
+-   Missing data
+-   Data frames
+-   Factors
+-   Formatting dates
+:::
+
+::: {.column width="50%"}
+-   Data manipulation
+-   Data visualisation with ggplot2
+    -   Scatter plot
+    -   Boxplot
+    -   Line graph
+    -   Bar graph
+    -   Interactive plots
+-   Additional functions
+-   Additional resources
+-   Summary
+:::
+:::
+
+## Time for... {.hcenter}
+
+![](images/Practical.PNG){fig-align="center"}
+
 ## Seeking help (1/3) {.smaller .hcenter}
 
 -   Use built-in RStudio help interface (bottom-right panel)
@@ -272,39 +306,6 @@ The data files for the lesson can be downloaded manually here: [https://github.c
         - It can be helpful, but not always reliable or just plain wrong
         - Keep sensitive data safe!
 
-## Objectives {.smaller .hcenter}
-
-::: columns
-::: {.column width="50%"}
--   What is R and RStudio
--   RStudio layout
--   Creating a reproducible project
--   [Object assignment]{.red}
--   Functions and arguments
--   Vectors
--   Missing data
--   Data frames
--   Factors
--   Formatting dates
-:::
-
-::: {.column width="50%"}
--   Data manipulation
--   Data visualisation with ggplot2
-    -   Scatter plot
-    -   Boxplot
-    -   Line graph
-    -   Bar graph
-    -   Interactive plots
--   Additional functions
--   Additional resources
--   Summary
-:::
-:::
-
-## Time for... {.hcenter}
-
-![](images/Practical.PNG){fig-align="center"}
 
 ## Objectives {.smaller .hcenter}
 
@@ -668,13 +669,25 @@ levels(x)
 
 ![](images/Practical.PNG){fig-align="center"}
 
-## Separate multiple items into rows {.hcenter}
+## Reshaping your data: `separate_longer_delim` {.hcenter}
 
-![](images/separate_longer.png){fig-align="center"}
+![](images/separate-longer-delim.png){fig-align="center"}
+
+## Reshaping your data: `replace_na` {.hcenter}
+
+![](images/replace-na.png){fig-align="center"}
+
+## Reshaping your data: `mutate` {.hcenter}
+
+![](images/mutate.png){fig-align="center"}
+
+## Reshaping your data: `if_else` {.hcenter}
+
+![](images/if-else.png){fig-align="center"}
 
 ## Reshaping your data: `pivot_wider` {.hcenter}
 
-![](images/pivot_wider_graphic.png){fig-align="center"}
+![](images/pivot-wider.png){fig-align="center"}
 
 ## Time for... {.hcenter}
 
