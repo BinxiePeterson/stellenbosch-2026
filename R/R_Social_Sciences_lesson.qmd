@@ -651,7 +651,7 @@ levels(x)
 
 ## Pipes {.hcenter}
 
-![](images/Pipes.PNG){fig-align="center"}
+![](images/pipes.png){fig-align="center"}
 
 ## Time for... {.hcenter}
 
@@ -671,7 +671,7 @@ levels(x)
 
 ## Reshaping your data: `separate_longer_delim` {.hcenter}
 
-![](images/separate-longer-delim.png){fig-align="center"}
+![](images/separate-longer-delim.png){fig-align="center" width="800"}
 
 ## Reshaping your data: `replace_na` {.hcenter}
 
