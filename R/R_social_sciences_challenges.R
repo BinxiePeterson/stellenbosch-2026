@@ -81,7 +81,7 @@ rooms_above_2 <- ?
 # Based on output of str(interviews), answer the following:
 str(interviews)
 
-# 5.1. What is the data structure of the object surveys?
+# 5.1. What is the data structure of the object interviews?
 
 
 # 5.2. How many rows and columns are in this object?
@@ -96,9 +96,9 @@ str(interviews)
 #    row 100 of the `interviews` dataset.
 interviews_100 <- ?  # extract observations from row 100
 
-# 6.2. Notice how `nrow(surveys)` gave you the number of rows in the tibble?
+# 6.2. Notice how `nrow(interviews)` gave you the number of rows in the tibble?
 #    6.2.1. Use that number to pull out just that last row in the tibble.
-n_rows <- nrow(interviews)  # get the number of rows in surveys dataset
+n_rows <- nrow(interviews)  # get the number of rows in the interviews dataset
 interviews_last <- ?
 
 #    6.2.2. Compare that with what you see as the last row using `tail()`
